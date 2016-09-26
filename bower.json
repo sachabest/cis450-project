@@ -1,0 +1,25 @@
+{
+  "name": "cis-450-project",
+  "description": "don't be mean",
+  "main": "index.js",
+  "authors": [
+    "Sacha <sachabest@outlook.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "homepage": "https://github.com/sachabest/cis450-project",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}
