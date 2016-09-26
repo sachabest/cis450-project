@@ -12,9 +12,10 @@
   "exclude": [
     "node_modules",
     "bower_components",
-    "typings"
+    "typings/globals"
   ],
   "include" : [
-    "public/ts/*"
+    "public/ts/*",
+    "typings/index.d.ts"
   ]
 }
