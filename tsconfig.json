@@ -1,21 +1,18 @@
 {
   "compilerOptions": {
     "target": "es5",
-    // "module": "commonjs",
-    "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "typeRoots" : ["./typings"]
   },
   "exclude": [
-    "node_modules",
-    "bower_components",
-    "typings/globals"
+    "node_modules/",
+    "bower_componenets"
   ],
   "include" : [
-    "public/ts/*",
-    "typings/index.d.ts"
+    "public/ts/*"
   ]
 }

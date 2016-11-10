@@ -8,7 +8,7 @@ var cis450;
             }
             return AppController;
         }());
-        main.AppController = AppController;
+        AppController.$inject = ['$scope', '$state'];
     })(main = cis450.main || (cis450.main = {}));
 })(cis450 || (cis450 = {}));
 //# sourceMappingURL=app.controller.js.map

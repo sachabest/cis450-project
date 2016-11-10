@@ -1,7 +1,8 @@
 module cis450.main {
 
-    export class AppController {
+    class AppController {
         public tempaateUrl = "public/html/index.html";
 
     }
+    AppController.$inject = ['$scope', '$state']
 }
