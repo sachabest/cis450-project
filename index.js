@@ -1,5 +1,16 @@
 var express = require('express');
+var mongoose = require('mongoose');
+var queries = require('./db/queries.js');
+var schema = require('./db/schema.js');
+
 var app = express();
+
+mongoose.connect('mongodb://52.91.224.3');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("db connected");
+});
 
 app.set('port', (process.env.PORT || 5000));
 

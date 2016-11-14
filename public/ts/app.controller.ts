@@ -1,8 +1,10 @@
 namespace cis450.main {
 
-    class AppController {
-        public tempaateUrl = "public/html/index.html";
+    export class AppController {
+
+        public constructor() {}
 
     }
-    AppController.$inject = ['$scope', '$state'];
+
+    getModule().controller("AppController", AppController);
 }
