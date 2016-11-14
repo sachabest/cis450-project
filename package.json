@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "./node_modules/bower/bin/bower install && ./node_modules/typings/bin/typings install && ./node_modules/typescript/bin/tsc -p . "
+    "postinstall": "./node_modules/bower/bin/bower install && npm install typings --global && typings install && ./node_modules/typescript/bin/tsc -p . "
   },
   "dependencies": {
     "bower": "^1.8.0",
