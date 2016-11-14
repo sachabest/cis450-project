@@ -8,7 +8,7 @@ namespace cis450.main {
             requireBase: false
         });
         $stateProvider.state('main', {
-            url: '',
+            url: '/',
             templateUrl: 'html/layout.html',
             controller: 'AppController',
             controllerAs: 'ctrl',

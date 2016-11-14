@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    var filesToMakeAppJS = ['public/ts/*.js'];
+    var filesToMakeAppJS = ['public/ts/app.js', 'public/ts/*.js'];
 
     var filesToWatch = function(){
         return filesToMakeAppJS;
@@ -38,13 +38,6 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            // express: {
-            //     files: ['*.js'],
-            //     tasks: ['express'],
-            //     options: {
-            //         spawn: false 
-            //     }
-            // },
             js: {
                 files: ['public/**/*.ts'],
                 tasks: ['ts', 'concat', 'uglify'],
