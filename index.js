@@ -26,7 +26,9 @@ app.get('/', function(request, response) {
 });
 
 app.get('/api/genres', function(request, response) {
-  response.send(queries.genres());
+  queries.genres().then(function(value) {
+    response.send(JSON.stringify(value));
+  });
 });
 
 app.listen(app.get('port'), function() {

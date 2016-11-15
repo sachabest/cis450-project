@@ -12,7 +12,7 @@ exports.getDashboard = function() {
 
 // Find songs that have the msot words in common
 exports.findCommon = function(toCount) {
-    var songWords = schema.song_word_count.aggregate([
+    var songWords = schema.models.song_word_count.aggregate([
         {
             $group: {
                 _id: "$song_id",
@@ -31,7 +31,7 @@ exports.findCommon = function(toCount) {
 
 // Find songs according to a filter
 exports.filterSongs = function(filter) {
-    schema.song.find(filter, {
+    schema.models.song.find(filter, {
         _id: 0,
         title: 1
     }, function(err, result) {
@@ -42,7 +42,7 @@ exports.filterSongs = function(filter) {
 
 // Autocomplete songs by name
 exports.autocompleteSongs = function(song_name) {
-    schema.song.find({
+    schema.models.song.find({
         title: song_name
     }, {
         _id: 0,
@@ -53,6 +53,8 @@ exports.autocompleteSongs = function(song_name) {
     });
 };
 
-exports.generes = function() {
-    return schema.genere.find();
+exports.genres = function() {
+    return schema.models.genre.find().lean().exec(function (err, users) {
+        return users;
+    });
 };
