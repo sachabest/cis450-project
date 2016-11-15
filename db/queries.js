@@ -52,3 +52,7 @@ exports.autocompleteSongs = function(song_name) {
         return result
     });
 };
+
+exports.generes = function() {
+    return schema.genere.find();
+};

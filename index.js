@@ -5,7 +5,7 @@ var schema = require('./db/schema.js');
 
 var app = express();
 
-mongoose.connect('mongodb://52.91.224.3:27000');
+mongoose.connect('mongodb://52.91.224.3:27000/cis450');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -23,6 +23,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index');
+});
+
+app.get('/api/genres', function(request, response) {
+  response.send(queries.genres());
 });
 
 app.listen(app.get('port'), function() {
