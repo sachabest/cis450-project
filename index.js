@@ -27,7 +27,70 @@ app.get('/', function(request, response) {
 
 app.get('/api/genres', function(request, response) {
   queries.genres().then(function(value) {
-    response.send(JSON.stringify(value));
+     response.json(value);
+  });
+});
+
+app.get('/api/songs/:song_name/similar', function(request, response) {
+  var song_name = request.params.song_name;
+  if (!song_name) {
+    response.send('invalid');
+  } else {
+    queries.similarSongs(song_name).then(function(value) {
+      response.json(value);
+    });
+  }
+});
+
+app.get('/api/songs/:song_name/tags', function(request, response) {
+  var song_name = request.params.song_name;
+  if (!song_name) {
+    response.send('invalid');
+  } else {
+    queries.songTags(song_name).then(function(value) {
+      response.json(value);
+    });
+  }
+});
+
+app.get('/api/artists/:artist_name/songs', function(request, response) {
+  var artist_name = request.params.artist_name;
+  if (!artist_name) {
+    response.send('invalid');
+  } else {
+    queries.artistSongs(artist_name).then(function(value) {
+      response.json(value);
+    });
+  }
+});
+
+app.get('/api/artists/:artist_name/genres', function(request, response) {
+  var artist_name = request.params.artist_name;
+  if (!artist_name) {
+    response.send('invalid');
+  } else {
+    queries.artistGenres(artist_name).then(function(value) {
+      response.json(value);
+    });
+  }
+});
+
+app.get('/api/songs/covered', function(request, response) {
+  queries.commonlyCoveredSongs().then(function(value) {
+    response.json(value);
+  });
+});
+
+app.get('/api/songs/similar', function(request, response) {
+  queries.findCommon(request.query.n).then(function(value) {
+    response.json(value);
+  });
+});
+
+
+app.get('/api/songs/popular', function(request, response) {
+  queries.mostPopularSongs().then(function(value) {
+    response.json(value);
   });
 });
 

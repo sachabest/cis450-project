@@ -20,11 +20,14 @@ exports.similarSongs = function(songTitle) {
 	}, {
 		_id: 0,
 		song_id: 0
-	}).toArray();
+	}).exec(function (err, tags) {
+		if (err) throw err;
+		return users;
+    });
 };
 
 // Find an artist's songs
-exports.artistGenres = function(artistName) {
+exports.artistSongs = function(artistName) {
 	var artistId = schema.models.artists.find({
 		name: artistName
 	}).toArray[0].artist_id;
@@ -33,7 +36,10 @@ exports.artistGenres = function(artistName) {
 	}, {
 		_id: 0,
 		song_id: 0
-	});
+	}).exec(function (err, tags) {
+		if (err) throw err;
+		return users;
+    });
 };
 
 // Find an artist's common genres
@@ -53,7 +59,10 @@ exports.artistGenres = function(artistName) {
 		}
 	}, {
 		song_id: 0
-	}).toArray();
+	}).exec(function (err, tags) {
+		if (err) throw err;
+		return users;
+    });
 };
 
 // Find what a song has been tagged as
@@ -66,7 +75,10 @@ exports.songTags = function(title) {
 	}, {
 		_id: 0,
 		song_id: 0
-	}).toArray();
+	}).exec(function (err, tags) {
+		if (err) throw err;
+		return users;
+    });
 };
 
 // Find the songs that have been played the most
@@ -78,7 +90,10 @@ exports.mostPopularSongs = function() {
                 count: { $sum: 1 }
             }
         }
-    ]).sort({count: -1}).toArray();
+    ]).sort({count: -1}).exec(function (err, users) {
+		if (err) throw err;
+		return users;
+    });
 };
 
 // Find songs that have been covered many times
@@ -90,7 +105,9 @@ exports.commonlyCoveredSongs = function() {
                 count: { $sum: 1 }
             }
         }
-    ]).sort({count: -1}).toArray();
+    ]).sort({count: -1}).exec(function (err, users) {
+		return users;
+    });
 };
 
 // Find songs that have the most words in common
@@ -119,11 +136,11 @@ exports.findCommon = function(toCount) {
 				song2: song2._id,
 				commonWords: intersection.length
 			});
-    	};
+    	});
     });
     return songPairs.sort(function(a, b) {
     	return a.count < b.count;
-    });
+    })
 };
 
 // Find songs according to a filter
