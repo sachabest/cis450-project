@@ -17,11 +17,6 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/bower_components'));
 
-app.use(function(req, res) {
-  // support ui router
-  res.render('pages/index');
-});
-
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -97,6 +92,11 @@ app.get('/api/songs/popular', function(request, response) {
   queries.mostPopularSongs().then(function(value) {
     response.json(value);
   });
+});
+
+app.use(function(req, res) {
+  // support ui router
+  res.render('pages/index');
 });
 
 app.listen(app.get('port'), function() {

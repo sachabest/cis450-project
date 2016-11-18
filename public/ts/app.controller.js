@@ -3,7 +3,18 @@ var cis450;
     var main;
     (function (main) {
         var AppController = (function () {
-            function AppController() {
+            function AppController($state) {
+                var _this = this;
+                this.$state = $state;
+                this.isMain = function () {
+                    return _this.$state.current.name == 'main';
+                };
+                this.isSongs = function () {
+                    return _this.$state.current.name == 'main.songs';
+                };
+                this.isGenres = function () {
+                    return _this.$state.current.name == 'main.genres';
+                };
             }
             return AppController;
         }());
