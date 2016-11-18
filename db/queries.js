@@ -14,18 +14,29 @@ exports.getDashboard = function() {
 exports.similarSongs = function(songTitle) {
 	return schema.models.song.find({
 		title: songTitle
-	}).exec(function (err, songs) {
+	}).exec()
+	.then(function (songs) {
 		var id = songs[0].song_id;
-		return schema.models.similar_song.find({
+		return schema.models.similar_songs.find({
 			song_id: id
 		}, {
 			_id: 0,
 			song_id: 0
-		}).exec(function (err, tags) {
-			if (err) throw err;
-			return tags;
-		});
-	});
+		}).exec()
+	})
+	.then(function (result) {
+		var similar = result[0].similar_song_id;
+		var song_ids = [];
+		for (var i = 0; i < similar.length; i++) {
+			song_ids.push(similar[i][0]);
+		}
+		console.log(song_ids);
+		return schema.models.song.find({
+			song_id: {
+				$in: song_ids
+			}
+		}).exec();
+	})
 };
 
 // Find an artist's songs
@@ -144,7 +155,7 @@ exports.findCommon = function(toCount) {
     	});
     });
     return songPairs.sort(function(a, b) {
-    	return a.count < b.count;
+    	return a.count - b.count;
     })
 };
 

@@ -19,9 +19,9 @@ var tag = new mongoose.Schema({
     tag: String
 });
 
-var similar_song = new mongoose.Schema({
+var similar_songs = new mongoose.Schema({
     song_id: String,
-    similar_song_id: String
+    similar_song_id: [[String]]
 });
 
 var genre = new mongoose.Schema({
@@ -46,10 +46,10 @@ var covers = new mongoose.Schema({
     song_id: String
 });
 
-models.song = mongoose.model('song', song);
-models.artist = mongoose.model('artist', artist);
-models.tag = mongoose.model('tag', tag);
-models.similar_song = mongoose.model('similar_song', similar_song);
+models.song = mongoose.model('songs', song);
+models.artist = mongoose.model('artists', artist);
+models.tag = mongoose.model('tags', tag);
+models.similar_songs = mongoose.model('similar_songs', similar_songs);
 models.genre = mongoose.model('genres', genre);
 models.song_word_count = mongoose.model('song_word_count', song_word_count);
 models.user_data = mongoose.model('user_data', user_data);
