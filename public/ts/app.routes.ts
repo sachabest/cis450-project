@@ -13,5 +13,17 @@ namespace cis450.main {
             controller: 'AppController',
             controllerAs: 'ctrl',
         })
+        .state('main.songs', {
+            url: 'songs',
+            templateUrl: 'html/songs.html',
+            controller: 'SongsController',
+            controllerAs: 'ctrl',
+        })
+        .state('main.genres', {
+            url: 'genres',
+            templateUrl: 'html/genres.html',
+            controller: 'GenresController',
+            controllerAs: 'ctrl'
+        });
     });
 }
