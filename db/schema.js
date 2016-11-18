@@ -24,11 +24,6 @@ var similar_song = new mongoose.Schema({
     similar_song_id: String
 });
 
-var cover = new mongoose.Schema({
-    cover_group_id: String,
-    song_id: String
-});
-
 var genre = new mongoose.Schema({
     song_id: String,
     genre: String

@@ -12,73 +12,81 @@ exports.getDashboard = function() {
 
 // Find songs that are similar to a given song title
 exports.similarSongs = function(songTitle) {
-	var id = schema.models.songs.find({
+	return schema.models.song.find({
 		title: songTitle
-	}).toArray[0].song_id;
-	return schema.models.similar_songs.find({
-		song_id: id
-	}, {
-		_id: 0,
-		song_id: 0
-	}).exec(function (err, tags) {
-		if (err) throw err;
-		return users;
-    });
+	}).exec(function (err, songs) {
+		var id = songs[0].song_id;
+		return schema.models.similar_song.find({
+			song_id: id
+		}, {
+			_id: 0,
+			song_id: 0
+		}).exec(function (err, tags) {
+			if (err) throw err;
+			return tags;
+		});
+	});
 };
 
 // Find an artist's songs
 exports.artistSongs = function(artistName) {
-	var artistId = schema.models.artists.find({
+	return schema.models.artist.find({
 		name: artistName
-	}).toArray[0].artist_id;
-	return schema.models.songs.find({
-		artist_id: artistId
-	}, {
-		_id: 0,
-		song_id: 0
-	}).exec(function (err, tags) {
-		if (err) throw err;
-		return users;
-    });
+	}).exec(function (err, artists) {
+		var artistId = artists[0].artist_id;
+		return schema.models.song.find({
+			artist_id: artistId
+		}, {
+			_id: 0,
+			song_id: 0
+		}).exec(function (err, tags) {
+			if (err) throw err;
+			return tags;
+		});
+	});
 };
 
 // Find an artist's common genres
 exports.artistGenres = function(artistName) {
-	var artistId = schema.models.artists.find({
+	return schema.models.artist.find({
 		name: artistName
-	}).toArray[0].artist_id;
-	var songs = schema.models.songs.find({
-		artist_id: artistId
-	}, {
-		_id: 0,
-		title: 0
+	}).exec(function (err, result) {
+		var artistId = result[0].artist_id;
+		var songs = schema.models.song.find({
+			artist_id: artistId
+		}, {
+			_id: 0,
+			title: 0
+		});
+		return schema.models.genres.find({
+			song_id: {
+				$in: songs
+			}
+		}, {
+			song_id: 0
+		}).exec(function (err, tags) {
+			if (err) throw err;
+			return tags;
+		});
 	});
-	return schema.models.genres.find({
-		song_id: {
-			$in: songs
-		}
-	}, {
-		song_id: 0
-	}).exec(function (err, tags) {
-		if (err) throw err;
-		return users;
-    });
 };
 
 // Find what a song has been tagged as
 exports.songTags = function(title) {
-	var id = schema.models.songs.find({
+	return schema.models.song.find({
 		title: songTitle
-	}).toArray[0].song_id;
-	return schema.models.tags.find({
-		song_id: id
-	}, {
-		_id: 0,
-		song_id: 0
-	}).exec(function (err, tags) {
-		if (err) throw err;
-		return users;
-    });
+	}).exec(function (err, result) {
+		var id = result[0].song_id;
+		return schema.models.tags.find({
+			song_id: id
+		}, {
+			_id: 0,
+			song_id: 0
+		}).exec(function (err, tags) {
+			if (err) throw err;
+			return users;
+		});
+	});
 };
 
 // Find the songs that have been played the most
@@ -89,8 +97,11 @@ exports.mostPopularSongs = function() {
                 _id: "$song_id",
                 count: { $sum: 1 }
             }
-        }
-    ]).sort({count: -1}).exec(function (err, users) {
+        },
+		{
+			$sort: {count: -1}
+		}
+    ]).exec(function (err, users) {
 		if (err) throw err;
 		return users;
     });
@@ -104,8 +115,11 @@ exports.commonlyCoveredSongs = function() {
                 _id: "$song_id",
                 count: { $sum: 1 }
             }
-        }
-    ]).sort({count: -1}).exec(function (err, users) {
+        },
+		{
+			$sort: {count: -1}
+		}
+    ]).exec(function (err, users) {
 		return users;
     });
 };
