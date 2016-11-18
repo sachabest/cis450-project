@@ -13,9 +13,10 @@
                 <input type="text" ng-model="ctrl.songName" placeholder="Song name" 
                     uib-typeahead="song.title for song in ctrl.autocompleteSongs($viewValue)" 
                     typeahead-no-results="'No results found.'" 
+                    typeahead-on-select="ctrl.autoCallback($item)"
                     class="form-control">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" ng-click="ctrl.loadSimilar()">Find Similar</button>
+                    <button class="btn btn-primary" ng-disabled="!ctrl.songId" ng-click="ctrl.loadSimilar()">Find Similar</button>
                 </span>
             </div>
         </div>
@@ -29,12 +30,12 @@
                     <th lass="col-md-2">Artist</th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="song in ctrl.similarSongs.songs">
+                    <tr ng-repeat="song in ctrl.similarSongs">
                         <td ng-bind="song.song_id"></td>
-                        <td ng-bind="song.name"></td>
-                        <td ng-bind="song.artist_name"></td>
+                        <td ng-bind="song.title"></td>
+                        <td ng-bind="song.artist"></td>
                     </tr>
-                    <tr ng-if="!ctrl.similarSongs.songs || !ctrl.similarSongs.songs.length">
+                    <tr ng-if="!ctrl.similarSongs || !ctrl.similarSongs.length">
                         <td colspan="3" style="text-align: center">No songs are similar to the given one</td>
                     </tr>
                 </tbody>

@@ -11,19 +11,13 @@ exports.getDashboard = function() {
 };
 
 // Find songs that are similar to a given song title
-exports.similarSongs = function(songTitle) {
-	return schema.models.song.find({
-		title: songTitle
-	}).exec()
-	.then(function (songs) {
-		var id = songs[0].song_id;
-		return schema.models.similar_songs.find({
-			song_id: id
+exports.similarSongs = function(song_id) {
+	return schema.models.similar_songs.find({
+			song_id: song_id
 		}, {
 			_id: 0,
 			song_id: 0
 		}).exec()
-	})
 	.then(function (result) {
 		var similar = result[0].similar_song_id;
 		var song_ids = [];
@@ -200,9 +194,9 @@ exports.autocompleteSongs = function(song_name) {
     return schema.models.song.find({
         title:  new RegExp(song_name, 'i')
     }, {
-        _id: 0,
-        title: 1,
-		artist: 1
+		_id: 0,
+        song_id: 1,
+        title: 1
     }).limit(10).exec(function(err, result) {
 		return result.map(function (item) {
 			item.title = item.title + " - " + item.artist;

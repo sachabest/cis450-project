@@ -31,12 +31,12 @@ app.get('/api/genres', function(request, response) {
   });
 });
 
-app.get('/api/songs/:song_name/similar', function(request, response) {
-  var song_name = request.params.song_name;
-  if (!song_name) {
+app.get('/api/songs/:song_id/similar', function(request, response) {
+  var song_id = request.params.song_id;
+  if (!song_id) {
     response.send('invalid');
   } else {
-    queries.similarSongs(song_name).then(function(value) {
+    queries.similarSongs(song_id).then(function(value) {
       response.json(value);
     });
   }
