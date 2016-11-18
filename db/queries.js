@@ -30,43 +30,34 @@ exports.similarSongs = function(songTitle) {
 
 // Find an artist's songs
 exports.artistSongs = function(artistName) {
-	return schema.models.artist.find({
-		name: artistName
-	}).exec(function (err, artists) {
-		var artistId = artists[0].artist_id;
-		return schema.models.song.find({
-			artist_id: artistId
-		}, {
-			_id: 0,
-			song_id: 0
-		}).exec(function (err, tags) {
-			if (err) throw err;
-			return tags;
-		});
+	return schema.models.song.find({
+		artist: artistName
+	}, {
+		_id: 0,
+		song_id: 0
+	}).exec(function (err, results) {
+		if (err) throw err;
+		return results;
 	});
 };
 
 // Find an artist's common genres
 exports.artistGenres = function(artistName) {
-	return schema.models.artist.find({
-		name: artistName
+	return schema.models.song.find({
+		artist: artistName
+	}, {
+		_id: 0,
+		title: 0
 	}).exec(function (err, result) {
-		var artistId = result[0].artist_id;
-		var songs = schema.models.song.find({
-			artist_id: artistId
-		}, {
-			_id: 0,
-			title: 0
-		});
-		return schema.models.genres.find({
+		return schema.models.genre.find({
 			song_id: {
-				$in: songs
+				$in: result
 			}
 		}, {
 			song_id: 0
-		}).exec(function (err, tags) {
+		}).exec(function (err, songs) {
 			if (err) throw err;
-			return tags;
+			return songs;
 		});
 	});
 };
@@ -77,7 +68,7 @@ exports.songTags = function(title) {
 		title: songTitle
 	}).exec(function (err, result) {
 		var id = result[0].song_id;
-		return schema.models.tags.find({
+		return schema.models.tag.find({
 			song_id: id
 		}, {
 			_id: 0,

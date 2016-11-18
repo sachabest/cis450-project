@@ -5,7 +5,7 @@ var models = exports.models = {};
 
 var song = new mongoose.Schema({
     song_id: String,
-    artist_id: String,
+    artist: String,
     title: String
 });
 
