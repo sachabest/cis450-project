@@ -24,6 +24,12 @@ namespace cis450.main {
             templateUrl: 'html/genres.html',
             controller: 'GenresController',
             controllerAs: 'ctrl'
+        })
+        .state('main.artists', {
+            url: 'artists',
+            templateUrl: 'html/artists.html',
+            controller: 'ArtistController',
+            controllerAs: 'ctrl'
         });
     });
 }

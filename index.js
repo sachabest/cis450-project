@@ -89,7 +89,13 @@ app.get('/api/songs/similar', function(request, response) {
 
 
 app.get('/api/songs/popular', function(request, response) {
-  queries.mostPopularSongs().then(function(value) {
+  queries.mostPopularSongs(request.query.n).then(function(value) {
+    response.json(value);
+  });
+});
+
+app.get('/api/autocomplete/songs/:song_name', function(request, response) {
+  queries.autocompleteSongs(request.params.song_name).then(function(value) {
     response.json(value);
   });
 });

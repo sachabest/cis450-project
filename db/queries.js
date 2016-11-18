@@ -98,7 +98,7 @@ exports.songTags = function(songTitle) {
 };
 
 // Find the songs that have been played the most
-exports.mostPopularSongs = function() {
+exports.mostPopularSongs = function(number) {
 	return schema.models.user_data.aggregate([
         {
             $group: {
@@ -108,6 +108,25 @@ exports.mostPopularSongs = function() {
         },
 		{
 			$sort: {count: -1}
+		},
+		{
+			$limit: number
+		},
+		{
+			$lookup: {
+				from: "songs",
+				localField: "_id",
+				foreignField: "song_id",
+				as: "song"
+			}
+		},
+		{
+			$project: {
+				_id: 0,
+				song_id: 1,
+				'song.name': 1,
+				count: 1
+			}
 		}
     ]).exec(function (err, users) {
 		if (err) throw err;
@@ -179,14 +198,13 @@ exports.filterSongs = function(filter) {
 // Autocomplete songs by name
 exports.autocompleteSongs = function(song_name) {
     return schema.models.song.find({
-        title: song_name
+        title:  new RegExp(song_name, 'i')
     }, {
         _id: 0,
         title: 1
-    }, function(err, result) {
-        if (err) throw err;
-        return result
-    });
+    }).limit(10).exec(function(err, result) {
+		return result;
+	});
 };
 
 exports.genres = function() {
