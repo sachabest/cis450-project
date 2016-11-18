@@ -196,7 +196,8 @@ exports.autocompleteSongs = function(song_name) {
     }, {
 		_id: 0,
         song_id: 1,
-        title: 1
+        title: 1,
+		artist: 1
     }).limit(10).exec(function(err, result) {
 		return result.map(function (item) {
 			item.title = item.title + " - " + item.artist;
