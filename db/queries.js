@@ -201,9 +201,12 @@ exports.autocompleteSongs = function(song_name) {
         title:  new RegExp(song_name, 'i')
     }, {
         _id: 0,
-        title: 1
+        title: 1,
+		artist: 1
     }).limit(10).exec(function(err, result) {
-		return result;
+		return result.map(function (item) {
+			item.title = item.title + " - " + item.artist;
+		});
 	});
 };
 
