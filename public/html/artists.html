@@ -1,0 +1,31 @@
+<div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input class="form-control" ng-bind="ctrl.artistName" placeholder="Song name"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="ctrl.loadSongs()">Find Songs</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th class="col-md-1">Song ID</th>
+                    <th lass="col-md-7">Song Name</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="song in ctrl.songs">
+                        <td ng-bind="song.song_id"></td>
+                        <td ng-bind="song.name"></td>
+                    </tr>
+                    <tr ng-if="!songs || !songs.length">
+                        <td colspan="3" style="text-align: center">No songs are similar to the given one</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
