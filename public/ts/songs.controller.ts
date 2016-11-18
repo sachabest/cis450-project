@@ -14,6 +14,7 @@ namespace cis450.main {
         public autoCallback = (item: any) => {
             if (item.song_id) {
                 this.songId = item.song_id;
+                this.loadSimilar();
             }
         }
 
