@@ -26,7 +26,8 @@ var similar_songs = new mongoose.Schema({
 
 var genre = new mongoose.Schema({
     song_id: String,
-    genre: String
+    genre: String,
+    strength: Number
 });
 
 var song_word_count = new mongoose.Schema({
@@ -42,7 +43,7 @@ var user_data = new mongoose.Schema({
 });
 
 var covers = new mongoose.Schema({
-    cover_group_id: String,
+    cover_group_id: Number,
     song_id: String
 });
 

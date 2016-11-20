@@ -14,6 +14,8 @@
                     uib-typeahead="song.title for song in ctrl.autocompleteSongs($viewValue)" 
                     typeahead-no-results="'No results found.'" 
                     typeahead-on-select="ctrl.autoCallback($item)"
+                    typeahead-min-length="3"
+                    typeahead-wait-ms="500"
                     class="form-control">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" ng-disabled="!ctrl.songId" ng-click="ctrl.loadSimilar()">Find Similar</button>

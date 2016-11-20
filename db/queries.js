@@ -17,33 +17,17 @@ exports.similarSongs = function(song_id) {
 		}, {
 			_id: 0,
 			song_id: 0
-		}).exec()
+		})
 	.then(function (result) {
-		var similar = result[0].similar_song_id;
-		var song_ids = [];
-		for (var i = 0; i < similar.length; i++) {
-			song_ids.push(similar[i][0]);
-		}
+		var song_ids = result[0].similar_song_id.map(function(item) {
+			return item[0];
+		});
 		return schema.models.song.find({
 			song_id: {
 				$in: song_ids
 			}
-		}).exec(function (err, songs) {
-			var artistCounts = {};
-			for (var i = 0; i < songs.length; i++) {
-				var artist = songs[i].artist;
-				if (songs[i].artist in artistCounts) {
-					artistCounts[artist] = artistCounts[artist] + 1;
-				} else {
-					artistCounts[artist] = 1;
-				}
-			}
-			return {
-				artists: artistCounts,
-				songs: songs
-			};
-		});
-	})
+		}).exec();
+	});
 };
 
 // Find an artist's songs
@@ -63,17 +47,19 @@ exports.artistGenres = function(artistName) {
 	}, {
 		_id: 0,
 		title: 0
-	}).exec().then(function (result) {
+	}).then(function (result) {
 		var ids = result.map(function(item) {
 			return item.song_id;
 		});
-		console.log(ids);
 		return schema.models.genre.find({
 			song_id: {
 				$in: ids
 			}
-		}).exec();
-	})
+		}, {
+			_id: 0,
+			genre: 1
+		}).sort({strength: -1}).limit(10).exec();
+	});
 };
 
 // Find what a song has been tagged as
@@ -133,16 +119,24 @@ exports.commonlyCoveredSongs = function() {
 	return schema.models.covers.aggregate([
         {
             $group: {
-                _id: "$song_id",
+                _id: "$cover_group_id",
                 count: { $sum: 1 }
             }
         },
 		{
 			$sort: {count: -1}
 		}
-    ]).exec(function (err, users) {
-		return users;
-    });
+    ])
+	.then(function(songs) {
+		return schema.models.covers.find({
+			cover_group_id: songs[0]._id
+		})
+	})
+	.then(function(songs) {
+		return schema.models.song.find({
+			song_id: songs[0].song_id
+		}).exec();
+	});
 };
 
 // Find songs that have the most words in common
