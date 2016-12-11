@@ -159,20 +159,34 @@ exports.songTags = function (songTitle) {
 
 // Find the songs that have been played the most
 exports.mostPopularSongs = function () {
-  return schema.models.users.aggregate([
-    {
-      $group: {
-        _id: "$song_id",
-        count: {$sum: 1}
-      }
-    },
+  return schema.models.popular_songs.aggregate([
     {
       $sort: {count: -1}
-    },
-    {
-      $limit: 10
     }
-  ]).allowDiskUse(true).exec();
+  ]).then(function (result) {
+    var counts = {};
+    var ids = result.map(function (item) {
+      counts[item._id] = item.count;
+      return item._id;
+    });
+    return schema.models.song.aggregate([
+      {
+        $match: {
+          song_id: {
+            $in: ids
+          }
+        }
+      }
+    ]).exec(function (err, result) {
+      for (var i = 0; i < result.length; i++) {
+        result[i].count = counts[result[i].song_id];
+      }
+      var response = result.sort(function (a, b) {
+        return b.count - a.count;
+      });
+      return response;
+    });
+  });
 };
 
 // Find songs that have been covered many times
