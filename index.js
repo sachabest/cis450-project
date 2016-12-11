@@ -82,14 +82,14 @@ app.get('/api/songs/covered', function(request, response) {
 });
 
 app.get('/api/songs/similar', function(request, response) {
-  queries.findCommon(request.query.n).then(function(value) {
+  queries.findCommon().then(function(value) {
     response.json(value);
   });
 });
 
 
 app.get('/api/songs/popular', function(request, response) {
-  queries.mostPopularSongs(request.query.n).then(function(value) {
+  queries.mostPopularSongs().then(function(value) {
     response.json(value);
   });
 });

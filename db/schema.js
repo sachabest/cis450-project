@@ -30,13 +30,13 @@ var genre = new mongoose.Schema({
     strength: Number
 });
 
-var song_word_count = new mongoose.Schema({
+var words = new mongoose.Schema({
     song_id: String,
     word: String,
     count: Number
 });
 
-var user_data = new mongoose.Schema({
+var users = new mongoose.Schema({
     user_id: String,
     song_id: String,
     count: Number
@@ -52,6 +52,6 @@ models.artist = mongoose.model('artists', artist);
 models.tag = mongoose.model('tags', tag);
 models.similar_songs = mongoose.model('similar_songs', similar_songs);
 models.genre = mongoose.model('genres', genre);
-models.song_word_count = mongoose.model('song_word_count', song_word_count);
-models.user_data = mongoose.model('user_data', user_data);
+models.words = mongoose.model('words', words);
+models.users = mongoose.model('users', users);
 models.covers = mongoose.model('covers', covers);
