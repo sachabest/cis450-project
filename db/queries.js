@@ -11,7 +11,7 @@ exports.getDashboard = function () {
 };
 
 // Find songs that are similar to a given song title
-exports.similarSongs = function (song_id) {
+exports.similarSongs = function (song_id, limit) {
   return schema.models.similar_songs.find({
     song_id: song_id
   }, {
@@ -26,7 +26,7 @@ exports.similarSongs = function (song_id) {
         song_id: {
           $in: song_ids
         }
-      }).exec();
+      }).limit(limit).exec();
     });
 };
 

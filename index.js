@@ -36,7 +36,7 @@ app.get('/api/songs/:song_id/similar', function(request, response) {
   if (!song_id) {
     response.send('invalid');
   } else {
-    queries.similarSongs(song_id).then(function(value) {
+    queries.similarSongs(song_id, request.query.n).then(function(value) {
       response.json(value);
     });
   }
