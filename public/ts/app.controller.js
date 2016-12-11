@@ -7,13 +7,16 @@ var cis450;
                 var _this = this;
                 this.$state = $state;
                 this.isMain = function () {
-                    return _this.$state.current.name == 'main';
+                    return _this.$state.current.name == 'main.home';
                 };
                 this.isSongs = function () {
                     return _this.$state.current.name == 'main.songs';
                 };
                 this.isGenres = function () {
                     return _this.$state.current.name == 'main.genres';
+                };
+                this.isArtists = function () {
+                    return _this.$state.current.name == 'main.artists';
                 };
                 this.isTags = function () {
                     return _this.$state.current.name == 'main.tags';

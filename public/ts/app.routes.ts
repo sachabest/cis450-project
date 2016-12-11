@@ -12,6 +12,13 @@ namespace cis450.main {
             templateUrl: 'html/layout.html',
             controller: 'AppController',
             controllerAs: 'ctrl',
+            abstract: true
+        })
+        .state('main.home', {
+            url: '',
+            templateUrl: 'html/home.html',
+            controller: 'HomeController',
+            controllerAs: 'ctrl',
         })
         .state('main.songs', {
             url: 'songs',

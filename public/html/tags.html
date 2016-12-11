@@ -15,17 +15,17 @@
                     typeahead-no-results="'No results found.'" 
                     typeahead-on-select="ctrl.autoCallback($item)"
                     typeahead-min-length="3"
-                    typeahead-wait-ms="500"
+                    typeahead-wait-ms="250"
                     class="form-control">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" ng-disabled="!ctrl.songId" ng-click="ctrl.loadSimilar()">Find Similar</button>
+                    <button class="btn btn-primary" ng-disabled="!ctrl.songId" ng-click="ctrl.loadTags()">Find Similar</button>
                 </span>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12" ng-if="ctrl.chartData">
-            <ng-tag-cloud cloud-data="ctrl.chartData"></ng-tag-cloud>
+            <ng-tag-cloud cloud-width="1000" cloud-height="500" cloud-data="ctrl.chartData"></ng-tag-cloud>
         </div>
     </div>
 </div>

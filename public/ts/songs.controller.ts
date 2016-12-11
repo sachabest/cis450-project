@@ -31,9 +31,8 @@ namespace cis450.main {
                     return val.title;
                 }) as string[];
                 this.chartData = this.similarSongs.map((val) => {
-                    return val.similarity;
+                    return val.score;
                 }) as number[];
-                console.log(this.chartLabels);
                 console.log(this.chartData);
             });
         }

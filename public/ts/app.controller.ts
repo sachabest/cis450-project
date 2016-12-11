@@ -5,7 +5,7 @@ namespace cis450.main {
         public constructor(private $state: ng.ui.IStateService) {}
 
         public isMain = () => {
-            return this.$state.current.name == 'main';
+            return this.$state.current.name == 'main.home';
         }
 
         public isSongs = () => {
@@ -14,6 +14,10 @@ namespace cis450.main {
 
         public isGenres = () => {
             return this.$state.current.name == 'main.genres';
+        }
+
+        public isArtists = () => {
+            return this.$state.current.name == 'main.artists';
         }
 
         public isTags = () => {

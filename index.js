@@ -111,6 +111,13 @@ app.get('/api/autocomplete/songs/:song_name', function(request, response) {
   });
 });
 
+app.get('/api/autocomplete/artists/:artist_name', function(request, response) {
+  queries.autocompleteArtists(request.params.artist_name).then(function(value) {
+    response.json(value);
+  });
+});
+
+
 app.use(function(req, res) {
   // support ui router
   res.render('pages/index');
