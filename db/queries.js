@@ -19,6 +19,11 @@ exports.similarSongs = function (song_id, limit) {
     song_id: 0
   })
     .then(function (result) {
+      var similarSongs = result[0].similar_song_id;
+      var similars = {};
+      for (var i = 0; i < similarSongs.length; i++) {
+        similars[similarSongs[i][0]] = similarSongs[i][1];
+      }
       var song_ids = result[0].similar_song_id.map(function (item) {
         return item[0];
       });
@@ -26,7 +31,12 @@ exports.similarSongs = function (song_id, limit) {
         song_id: {
           $in: song_ids
         }
-      }).limit(limit).exec();
+      }).limit(limit).lean().exec(function (err, result) {
+        for (var i = 0; i < result.length; i++) {
+          result[i]["score"] = parseFloat(similars[result[i].song_id]);
+        }
+        return result;
+      });
     });
 };
 
