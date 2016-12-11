@@ -58,7 +58,7 @@ app.get('/api/songs/:song_id/tags', function(request, response) {
   if (!song_id) {
     response.send('invalid');
   } else {
-    queries.songTagsById(song_id).then(function(value) {
+    queries.songTagsById(song_id, request.query.n).then(function(value) {
       response.json(value);
     });
   }

@@ -86,7 +86,7 @@ exports.artistGenres = function (artistName) {
   });
 };
 
-exports.songTagsById = function (song) {
+exports.songTagsById = function (song, limit) {
     return schema.models.tag.aggregate([
       {
         $match: {
@@ -114,7 +114,7 @@ exports.songTagsById = function (song) {
     resultsArray.sort(function (a, b) {
       return b[1] - a[1];
     });
-    return resultsArray;
+    return resultsArray.slice(0, limit);
   })
 };
 
