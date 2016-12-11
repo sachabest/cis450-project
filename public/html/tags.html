@@ -24,31 +24,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <th class="col-md-1">Song ID</th>
-                    <th lass="col-md-7">Song Name</th>
-                    <th lass="col-md-2">Artist</th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="song in ctrl.similarSongs">
-                        <td ng-bind="song.song_id"></td>
-                        <td ng-bind="song.title"></td>
-                        <td ng-bind="song.artist"></td>
-                    </tr>
-                    <tr ng-if="!ctrl.similarSongs || !ctrl.similarSongs.length">
-                        <td colspan="3" style="text-align: center">No songs are similar to the given one</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <canvas id="radar" class="chart chart-radar"
-            chart-data="ctrl.chartLabels" chart-options="options" chart-labels="ctrl.chartData">
-            </canvas> 
+        <div class="col-md-12" ng-if="ctrl.chartData">
+            <ng-tag-cloud cloud-data="ctrl.chartData"></ng-tag-cloud>
         </div>
     </div>
 </div>

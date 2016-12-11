@@ -86,6 +86,38 @@ exports.artistGenres = function (artistName) {
   });
 };
 
+exports.songTagsById = function (song) {
+    return schema.models.tag.aggregate([
+      {
+        $match: {
+          song_id: {
+            $eq: song
+          }
+        }
+      }
+    ]).exec().then(function (result) {
+      console.log(result);
+    var results = {};
+    for (var i = 0; i < result.length; i++) {
+      var song = result[i];
+      for (var j = 0; j < song.tags.length; j++) {
+        var tag = song.tags[j];
+        if (!(tag[0] in results)) {
+          results[tag[0]] = 0;
+        }
+        results[tag[0]] = results[tag[0]] + parseInt(tag[1]);
+      }
+    }
+    var resultsArray = [];
+    for (var tag in results)
+      resultsArray.push([tag, results[tag]]);
+    resultsArray.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    return resultsArray;
+  })
+};
+
 // Find what a song has been tagged as
 exports.songTags = function (songTitle) {
   return schema.models.song.find({

@@ -16,6 +16,9 @@ namespace cis450.main {
             return this.$state.current.name == 'main.genres';
         }
 
+        public isTags = () => {
+            return this.$state.current.name == 'main.tags';
+        }
     }
 
     getModule().controller("AppController", AppController);

@@ -42,12 +42,23 @@ app.get('/api/songs/:song_id/similar', function(request, response) {
   }
 });
 
-app.get('/api/songs/:song_name/tags', function(request, response) {
+app.get('/api/songs/name/:song_name/tags', function(request, response) {
   var song_name = request.params.song_name;
   if (!song_name) {
     response.send('invalid');
   } else {
     queries.songTags(song_name).then(function(value) {
+      response.json(value);
+    });
+  }
+});
+
+app.get('/api/songs/:song_id/tags', function(request, response) {
+  var song_id = request.params.song_id;
+  if (!song_id) {
+    response.send('invalid');
+  } else {
+    queries.songTagsById(song_id).then(function(value) {
       response.json(value);
     });
   }

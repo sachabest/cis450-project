@@ -15,6 +15,9 @@ var cis450;
                 this.isGenres = function () {
                     return _this.$state.current.name == 'main.genres';
                 };
+                this.isTags = function () {
+                    return _this.$state.current.name == 'main.tags';
+                };
             }
             return AppController;
         }());

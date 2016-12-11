@@ -30,6 +30,12 @@ namespace cis450.main {
             templateUrl: 'html/artists.html',
             controller: 'ArtistController',
             controllerAs: 'ctrl'
-        });
+        })
+        .state('main.tags', {
+            url: 'tags',
+            templateUrl: 'html/tags.html',
+            controller: 'TagsController',
+            controllerAs: 'ctrl'
+        })
     });
 }
