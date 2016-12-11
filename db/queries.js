@@ -280,7 +280,7 @@ exports.autocompleteSongs = function (song_name) {
     title: 1,
     artist: 1
   }).limit(10).exec(function (err, result) {
-    return result.map(function (ilatem) {
+    return result.map(function (item) {
       item.title = item.title + " - " + item.artist;
     });
   });
