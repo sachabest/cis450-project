@@ -130,7 +130,7 @@ exports.mostPopularSongs = function () {
     {
       $limit: 10
     }
-  ]).exec();
+  ]).allowDiskUse(true).exec();
 };
 
 // Find songs that have been covered many times
@@ -181,9 +181,8 @@ exports.findCommon = function () {
           $addToSet: "$word"
         }
       }
-    }]).exec(function (err, songWords) {
+    }]).allowDiskUse(true).exec(function (err, songWords) {
     // songWords maps song id to the most popular words contained in that song
-    console.log(songWords);
     var mostCommon = songWords.map(function (song1) {
       songWords.forEach(function (song2) {
         var words1 = song1.words;
@@ -232,7 +231,20 @@ exports.autocompleteSongs = function (song_name) {
 };
 
 exports.genres = function () {
-  return schema.models.genre.find().lean().exec(function (err, users) {
-    return users;
-  });
+  return schema.models.genre.aggregate([
+    {
+      $group: {
+        _id: "$genre",
+        score: {$sum: "$strength"}
+      }
+    },
+    {
+      $sort: {score: -1}
+    },
+    {
+      $project: {
+        _id: 1
+      }
+    }
+  ]).allowDiskUse(true).exec();
 };

@@ -2,6 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var queries = require('./db/queries.js');
 var schema = require('./db/schema.js');
+var fs = require('fs');
 
 var app = express();
 
@@ -25,10 +26,16 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+var genres = JSON.parse(fs.readFileSync('genres.js', 'utf8'));
 app.get('/api/genres', function(request, response) {
-  queries.genres().then(function(value) {
-     response.json(value);
-  });
+  if (genres) {
+    response.json(genres);
+  } else {
+    queries.genres().then(function(value) {
+      genres = value;
+      response.json(value);
+    });
+  }
 });
 
 app.get('/api/songs/:song_id/similar', function(request, response) {
