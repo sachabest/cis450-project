@@ -231,20 +231,7 @@ exports.autocompleteSongs = function (song_name) {
 };
 
 exports.genres = function () {
-  return schema.models.genre.aggregate([
-    {
-      $group: {
-        _id: "$genre",
-        score: {$sum: "$strength"}
-      }
-    },
-    {
-      $sort: {score: -1}
-    },
-    {
-      $project: {
-        _id: 1
-      }
-    }
-  ]).allowDiskUse(true).exec();
+  return schema.models.top_genres.find({}, {
+    _id: 0
+  }).exec();
 };

@@ -47,6 +47,10 @@ var covers = new mongoose.Schema({
     song_id: String
 });
 
+var top_genres = new mongoose.Schema({
+    cover: String
+});
+
 models.song = mongoose.model('songs', song);
 models.artist = mongoose.model('artists', artist);
 models.tag = mongoose.model('tags', tag);
@@ -55,3 +59,4 @@ models.genre = mongoose.model('genres', genre);
 models.words = mongoose.model('words', words);
 models.users = mongoose.model('users', users);
 models.covers = mongoose.model('covers', covers);
+models.top_genres = mongoose.model('top_genres', top_genres);
