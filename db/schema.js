@@ -52,6 +52,9 @@ var top_genres = new mongoose.Schema({
 });
 
 var popular_songs = new mongoose.Schema({
+    song_id: String,
+    artist: String,
+    title: String,
     count: Number
 });
 

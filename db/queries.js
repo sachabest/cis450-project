@@ -96,7 +96,6 @@ exports.songTagsById = function (song, limit) {
         }
       }
     ]).exec().then(function (result) {
-      console.log(result);
     var results = {};
     for (var i = 0; i < result.length; i++) {
       var song = result[i];
@@ -272,14 +271,15 @@ exports.filterSongs = function (filter) {
 
 // Autocomplete songs by name
 exports.autocompleteSongs = function (song_name) {
-  return schema.models.song.find({
+  return schema.models.popular_songs.find({
     title: new RegExp(song_name, 'i')
   }, {
     _id: 0,
     song_id: 1,
     title: 1,
-    artist: 1
-  }).limit(10).exec(function (err, result) {
+    artist: 1,
+    count: 1
+  }).sort({count: -1}).limit(10).exec(function (err, result) {
     return result.map(function (item) {
       item.title = item.title + " - " + item.artist;
     });
